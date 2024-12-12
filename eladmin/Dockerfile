@@ -4,10 +4,6 @@ FROM maven:3.8.4-openjdk-8 AS builder
 # 设置工作目录
 WORKDIR /app
 
-# 复制 pom.xml 文件并安装依赖
-COPY pom.xml .
-RUN mvn dependency:go-offline -B
-
 # 复制所有子模块的 pom.xml 文件
 COPY eladmin-common/pom.xml eladmin-common/
 COPY eladmin-generator/pom.xml eladmin-generator/
@@ -23,7 +19,7 @@ COPY eladmin-system/src ./eladmin-system/src
 COPY eladmin-tools/src ./eladmin-tools/src
 
 # 构建项目
-RUN mvn clean install package -DskipTests
+RUN mvn clean install package -DskipTests -U
 
 # 使用 openjdk 镜像作为最终运行环境
 FROM openjdk:8
