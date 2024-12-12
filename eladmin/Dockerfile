@@ -2,7 +2,7 @@
 FROM maven:3.8.4-openjdk-8 AS builder
 
 # 设置 DNS 服务器
-RUN sudo resolvectl dns eth0 8.8.8.8 8.8.4.4
+RUN resolvectl dns eth0 8.8.8.8 8.8.4.4
 
 # 设置工作目录
 WORKDIR /app
