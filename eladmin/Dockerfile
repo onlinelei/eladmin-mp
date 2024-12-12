@@ -4,9 +4,6 @@ FROM maven:3.8.4-openjdk-8 AS builder
 # 设置工作目录
 WORKDIR /app
 
-# 拉取最新代码
-RUN cd .. && git pull
-
 # 复制 pom.xml 文件并安装依赖
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
