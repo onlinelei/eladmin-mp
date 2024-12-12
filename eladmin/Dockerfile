@@ -1,5 +1,9 @@
-# 使用包含 Git 和 Maven 的基础镜像
+# 使用 Maven 的基础镜像
 FROM maven:3.8.4-openjdk-8 AS builder
+
+# 设置 DNS 服务器
+RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf && \
+    echo "nameserver 8.8.4.4" >> /etc/resolv.conf
 
 # 设置工作目录
 WORKDIR /app
