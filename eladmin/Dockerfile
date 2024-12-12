@@ -22,7 +22,7 @@ COPY eladmin-system/src ./eladmin-system/src
 COPY eladmin-tools/src ./eladmin-tools/src
 
 # 构建项目
-RUN mvn clean install package -DskipTests
+RUN mvn clean install package -DskipTests -U
 
 # 使用 openjdk 镜像作为最终运行环境
 FROM openjdk:8
