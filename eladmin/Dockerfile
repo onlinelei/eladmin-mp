@@ -2,8 +2,10 @@
 FROM maven:3.8.4-openjdk-8 AS builder
 
 # 设置 DNS 服务器
-RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf && \
-    echo "nameserver 8.8.4.4" >> /etc/resolv.conf
+ARG DNS_1
+ARG DNS_2
+RUN echo "nameserver $DNS_1" > /etc/resolv.conf && \
+    echo "nameserver $DNS_2" >> /etc/resolv.conf
 
 # 设置工作目录
 WORKDIR /app
