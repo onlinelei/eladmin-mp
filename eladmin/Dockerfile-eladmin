@@ -15,3 +15,5 @@ EXPOSE 8080
 
 # 启动应用
 ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=prod"]
+
+
