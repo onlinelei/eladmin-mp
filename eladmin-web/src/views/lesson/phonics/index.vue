@@ -77,24 +77,24 @@ export default {
           name: 'L1 基础课程',
           expanded: true,
           videos: [
-            { title: 'ABC', url: 'http://file.okeng.top/phonics/ABC.mp4' },
-            { title: 'DEF', url: 'http://file.okeng.top/phonics/DEF.mp4' },
-            { title: 'GHI', url: 'http://file.okeng.top/phonics/GHI.mp4' },
-            { title: 'JKL', url: 'http://file.okeng.top/phonics/JKL.mp4' },
-            { title: 'MNO', url: 'http://file.okeng.top/phonics/MNO.mp4' },
-            { title: 'PQR', url: 'http://file.okeng.top/phonics/PQR.mp4' },
-            { title: 'STUV', url: 'http://file.okeng.top/phonics/STUV.mp4' },
-            { title: 'WXYZ', url: 'http://file.okeng.top/phonics/WXYZ.mp4' }
+            { title: 'ABC', url: 'http://file.okeng.top/phonics/L1/ABC.mp4' },
+            { title: 'DEF', url: 'http://file.okeng.top/phonics/L1/DEF.mp4' },
+            { title: 'GHI', url: 'http://file.okeng.top/phonics/L1/GHI.mp4' },
+            { title: 'JKL', url: 'http://file.okeng.top/phonics/L1/JKL.mp4' },
+            { title: 'MNO', url: 'http://file.okeng.top/phonics/L1/MNO.mp4' },
+            { title: 'PQR', url: 'http://file.okeng.top/phonics/L1/PQR.mp4' },
+            { title: 'STUV', url: 'http://file.okeng.top/phonics/L1/STUV.mp4' },
+            { title: 'WXYZ', url: 'http://file.okeng.top/phonics/L1/WXYZ.mp4' }
           ]
         },
         {
           name: 'L2 进阶课程',
           expanded: false,
           videos: [
-            { title: 'MNO', url: 'http://file.okeng.top/phonics/MNO.mp4' },
-            { title: 'PQR', url: 'http://file.okeng.top/phonics/PQR.mp4' },
-            { title: 'STUV', url: 'http://file.okeng.top/phonics/STUV.mp4' },
-            { title: 'WXYZ', url: 'http://file.okeng.top/phonics/WXYZ.mp4' }
+            { title: 'MNO', url: 'http://file.okeng.top/phonics/L1/MNO.mp4' },
+            { title: 'PQR', url: 'http://file.okeng.top/phonics/L1/PQR.mp4' },
+            { title: 'STUV', url: 'http://file.okeng.top/phonics/L1/STUV.mp4' },
+            { title: 'WXYZ', url: 'http://file.okeng.top/phonics/L1/WXYZ.mp4' }
           ]
         },
         {
