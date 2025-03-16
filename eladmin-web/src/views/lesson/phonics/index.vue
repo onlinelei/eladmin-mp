@@ -74,21 +74,21 @@ export default {
       isLoading: false,
       categorizedPlaylist: [
         {
-          name: 'L1 基础课程',
+          name: 'L1 基础课程,想好叫什么告诉我',
           expanded: true,
           videos: [
-            { title: 'ABC', url: 'http://file.okeng.top/phonics/L1/ABC.mp4' },
-            { title: 'DEF', url: 'http://file.okeng.top/phonics/L1/DEF.mp4' },
-            { title: 'GHI', url: 'http://file.okeng.top/phonics/L1/GHI.mp4' },
-            { title: 'JKL', url: 'http://file.okeng.top/phonics/L1/JKL.mp4' },
-            { title: 'MNO', url: 'http://file.okeng.top/phonics/L1/MNO.mp4' },
-            { title: 'PQR', url: 'http://file.okeng.top/phonics/L1/PQR.mp4' },
-            { title: 'STUV', url: 'http://file.okeng.top/phonics/L1/STUV.mp4' },
-            { title: 'WXYZ', url: 'http://file.okeng.top/phonics/L1/WXYZ.mp4' }
+            { title: 'ABC', url: 'https://okeng.top/file/phonics/L1/ABC.mp4' },
+            { title: 'DEF', url: 'https://okeng.top/file/phonics/L1/DEF.mp4' },
+            { title: 'GHI', url: 'https://okeng.top/file/phonics/L1/GHI.mp4' },
+            { title: 'JKL', url: 'https://okeng.top/file/phonics/L1/JKL.mp4' },
+            { title: 'MNO', url: 'https://okeng.top/file/phonics/L1/MNO.mp4' },
+            { title: 'PQR', url: 'https://okeng.top/file/phonics/L1/PQR.mp4' },
+            { title: 'STUV', url: 'https://okeng.top/file/phonics/L1/STUV.mp4' },
+            { title: 'WXYZ', url: 'https://okeng.top/file/phonics/L1/WXYZ.mp4' }
           ]
         },
         {
-          name: 'L2 进阶课程',
+          name: 'L2 进阶课程,想好叫什么告诉我',
           expanded: false,
           videos: [
             { title: 'MNO', url: 'http://file.okeng.top/phonics/L1/MNO.mp4' },
@@ -98,7 +98,7 @@ export default {
           ]
         },
         {
-          name: 'L3 高级课程',
+          name: 'L3 高级课程,想好叫什么告诉我',
           expanded: false,
           videos: [
             { title: '组合发音1', url: 'http://file.okeng.top/demo/1.mp4' },
@@ -106,7 +106,7 @@ export default {
           ]
         },
         {
-          name: 'L4 实战训练',
+          name: 'L4 实战训练, 想好叫什么告诉我',
           expanded: false,
           videos: [
             { title: '场景练习1', url: 'http://file.okeng.top/demo/3.mp4' },
