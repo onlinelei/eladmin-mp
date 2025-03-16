@@ -1,20 +1,65 @@
 <template>
   <div class="new-category">
-    <h1 class="page-title">自然拼读</h1>
+    <h1 class="page-title">自然拼读
+      <span class="title-decoration" />
+    </h1>
     <div class="content-container">
-      <div class="video-container">
-        <video ref="videoPlayer" controls>
-          <source :src="currentVideoUrl" type="video/mp4">
-          您的浏览器不支持 video 标签。
-        </video>
+      <!-- 视频播放区域 -->
+      <div class="video-wrapper">
+        <div class="video-container">
+          <div v-if="isLoading" class="loading-overlay">
+            <div class="loading-spinner" />
+            <div class="loading-text">加载中...</div>
+          </div>
+          <video
+            ref="videoPlayer"
+            controls
+            class="video-player"
+            @waiting="onVideoWaiting"
+            @playing="onVideoPlaying"
+          >
+            <source :src="currentVideoUrl" type="video/mp4">
+            您的浏览器不支持 video 标签。
+          </video>
+        </div>
       </div>
+
+      <!-- 分级播放列表 -->
       <div class="playlist-container">
-        <h2 class="playlist-title">播放列表</h2>
-        <ul>
-          <li v-for="(video, index) in playlist" :key="index" :class="{ 'active': currentVideoUrl === video.url }" @click="playVideo(video.url)">
-            {{ video.title }}
-          </li>
-        </ul>
+        <h2 class="playlist-title">
+          <i class="el-icon-menu" />
+          课程目录
+        </h2>
+        <div class="playlist-scroll">
+          <ul class="playlist">
+            <li
+              v-for="(category, index) in categorizedPlaylist"
+              :key="'cat-'+index"
+              class="category-item"
+              :class="{ expanded: category.expanded }"
+            >
+              <div class="category-header" @click="toggleCategory(category)">
+                <i v-if="category.expanded" class="el-icon-folder-opened" />
+                <i v-else class="el-icon-folder" />
+                {{ category.name }}
+                <i class="el-icon-arrow-right arrow-icon" />
+              </div>
+              <transition name="slide">
+                <ul v-show="category.expanded" class="sub-list">
+                  <li
+                    v-for="(video, vIndex) in category.videos"
+                    :key="'vid-'+vIndex"
+                    :class="{ 'active': currentVideoUrl === video.url }"
+                    @click.stop="playVideo(video.url)"
+                  >
+                    <i class="el-icon-video-play" />
+                    <span class="video-title">{{ video.title }}</span>
+                  </li>
+                </ul>
+              </transition>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -26,109 +71,335 @@ export default {
   data() {
     return {
       currentVideoUrl: '',
-      playlist: [
-        { title: 'Aa', url: 'http://file.okeng.top/phonicsABC/Aa.mp4' },
-        { title: 'Bb', url: 'http://file.okeng.top/phonicsABC/Bb.mp4' },
-        { title: 'Cc', url: 'http://file.okeng.top/phonicsABC/Cc.mp4' },
-        { title: 'I can walk', url: 'http://file.okeng.top/Kids%20vocabulary%20-%20Action%20Verbs%20-%20Action%20Words%20-%20Learn%20English%20for%20kids%20-%20English%20educational%20video.mp4' }
-        // 可以根据需要添加更多视频
+      isLoading: false,
+      categorizedPlaylist: [
+        {
+          name: 'L1 基础课程',
+          expanded: true,
+          videos: [
+            { title: 'ABC', url: 'http://file.okeng.top/phonics/ABC.mp4' },
+            { title: 'DEF', url: 'http://file.okeng.top/phonics/DEF.mp4' },
+            { title: 'GHI', url: 'http://file.okeng.top/phonics/GHI.mp4' },
+            { title: 'JKL', url: 'http://file.okeng.top/phonics/JKL.mp4' },
+            { title: 'MNO', url: 'http://file.okeng.top/phonics/MNO.mp4' },
+            { title: 'PQR', url: 'http://file.okeng.top/phonics/PQR.mp4' },
+            { title: 'STUV', url: 'http://file.okeng.top/phonics/STUV.mp4' },
+            { title: 'WXYZ', url: 'http://file.okeng.top/phonics/WXYZ.mp4' }
+          ]
+        },
+        {
+          name: 'L2 进阶课程',
+          expanded: false,
+          videos: [
+            { title: 'MNO', url: 'http://file.okeng.top/phonics/MNO.mp4' },
+            { title: 'PQR', url: 'http://file.okeng.top/phonics/PQR.mp4' },
+            { title: 'STUV', url: 'http://file.okeng.top/phonics/STUV.mp4' },
+            { title: 'WXYZ', url: 'http://file.okeng.top/phonics/WXYZ.mp4' }
+          ]
+        },
+        {
+          name: 'L3 高级课程',
+          expanded: false,
+          videos: [
+            { title: '组合发音1', url: 'http://file.okeng.top/demo/1.mp4' },
+            { title: '组合发音2', url: 'http://file.okeng.top/demo/2.mp4' }
+          ]
+        },
+        {
+          name: 'L4 实战训练',
+          expanded: false,
+          videos: [
+            { title: '场景练习1', url: 'http://file.okeng.top/demo/3.mp4' },
+            { title: '场景练习2', url: 'http://file.okeng.top/demo/4.mp4' }
+          ]
+        }
       ]
     }
   },
   mounted() {
-    // 初始化时播放第一个视频（如果需要）
-    if (this.playlist.length > 0) {
-      this.currentVideoUrl = this.playlist[0].url
-    }
+    this.initFirstVideo()
   },
   methods: {
+    initFirstVideo() {
+      if (this.categorizedPlaylist[0].videos.length > 0) {
+        this.currentVideoUrl = this.categorizedPlaylist[0].videos[0].url
+      }
+    },
+    toggleCategory(category) {
+      category.expanded = !category.expanded
+    },
     playVideo(url) {
       this.currentVideoUrl = url
-      this.$refs.videoPlayer.load() // 重新加载视频
-      this.$refs.videoPlayer.play() // 播放视频
+      const video = this.$refs.videoPlayer
+      this.isLoading = true
+      video.load()
+      video.play().catch(error => {
+        console.log('视频自动播放被阻止:', error)
+        this.isLoading = false
+      })
+    },
+    onVideoWaiting() {
+      this.isLoading = true
+    },
+    onVideoPlaying() {
+      this.isLoading = false
     }
   }
 }
 </script>
 
 <style scoped>
+/* 页面容器样式 */
 .new-category {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  box-sizing: border-box;
-  width: 100%;
+  padding: 30px 40px;
+  background: #f5f7fa;
+  min-height: 100vh;
 }
 
+/* 页面标题样式 */
 .page-title {
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-size: 28px;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  position: relative;
   text-align: center;
+  padding-bottom: 15px;
 }
 
+/* 标题装饰线样式 */
+.title-decoration {
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #409EFF, transparent);
+  margin: 10px auto 0;
+}
+
+/* 内容容器样式 */
 .content-container {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 1100px;
-  box-sizing: border-box;
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  flex-wrap: nowrap; /* 防止换行 */
 }
 
-.video-container {
-  flex: 2;
-  margin-right: 20px;
-  width: 800px; /* 固定宽度 */
-  height: 450px; /* 固定高度 */
-  max-width: 800px; /* 最大宽度 */
-  max-height: 450px; /* 最大高度 */
-  overflow: hidden; /* 防止视频溢出 */
-}
-
-.video-container video {
-  width: 100%;
-  height: 100%;
-  background-color: #000;
-  object-fit: cover; /* 保持视频比例，填充整个容器 */
-}
-
-.playlist-container {
-  flex: 1;
-  width: 100%;
-  max-width: 300px;
-}
-
-.playlist-title {
-  font-size: 18px;
-  margin-bottom: 10px;
-  text-align: left;
-}
-
-.playlist-container ul {
-  list-style-type: none;
-  padding: 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+/* 视频区域容器样式 */
+.video-wrapper {
+  flex: 3;
+  min-width: 0;
   overflow: hidden;
 }
 
-.playlist-container li {
-  padding: 10px;
+/* 视频容器样式 */
+.video-container {
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  position: relative;
+  padding-top: 56.25%; /* 16:9 比例 */
+}
+
+/* 视频播放器样式 */
+.video-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 播放列表容器样式 */
+.playlist-container {
+  flex: 1;
+  min-width: 300px;
+  max-width: 350px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 播放列表滚动区域样式 */
+.playlist-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* 播放列表标题样式 */
+.playlist-title {
+  font-size: 18px;
+  color: #303133;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f0f2f5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 播放列表样式 */
+.playlist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 分类项样式 */
+.category-item {
+  margin: 8px 0;
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* 分类标题样式 */
+.category-header {
+  padding: 14px 16px;
   cursor: pointer;
-  background-color: #fff;
-  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s;
+  background: #f8f9fa;
+  border-radius: 8px;
 }
 
-.playlist-container li:last-child {
-  border-bottom: none;
+/* 分类标题hover效果 */
+.category-header:hover {
+  background: #f0f7ff;
 }
 
-.playlist-container li:hover {
-  background-color: #f0f0f0;
+/* 分类箭头图标样式 */
+.arrow-icon {
+  margin-left: auto;
+  transform: rotate(0deg);
+  transition: transform 0.3s;
 }
 
-.playlist-container li.active {
-  background-color: #e0f7fa;
-  font-weight: bold;
+/* 展开状态的分类箭头图标样式 */
+.expanded .arrow-icon {
+  transform: rotate(90deg);
+}
+
+/* 子列表样式 */
+.sub-list {
+  list-style: none;
+  padding: 8px 0 8px 30px;
+  margin: 0;
+}
+
+/* 子列表项样式 */
+.sub-list li {
+  padding: 12px 16px;
+  margin: 4px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s;
+  background: #f8f9fa;
+}
+
+/* 子列表项hover效果 */
+.sub-list li:hover {
+  background: #f0f7ff;
+}
+
+/* 选中状态的子列表项样式 */
+.sub-list li.active {
+  background: #ecf5ff;
+  font-weight: 500;
+  color: #409EFF;
+}
+
+/* 视频标题样式 */
+.video-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 加载遮罩样式 */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* 加载动画样式 */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #409EFF;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* 加载文字样式 */
+.loading-text {
+  color: white;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+/* 旋转动画定义 */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 展开收起动画 */
+.slide-enter-active, .slide-leave-active {
+  transition: all 0.3s ease;
+}
+.slide-enter, .slide-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .content-container {
+    flex-direction: row; /* 保持水平排列 */
+  }
+
+  .video-container {
+    padding-top: 56.25%; /* 保持16:9比例 */
+  }
+
+  .playlist-container {
+    width: auto;
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .new-category {
+    padding: 20px 15px;
+  }
+
+  .page-title {
+    font-size: 24px;
+  }
+
+  .playlist li {
+    padding: 12px;
+  }
 }
 </style>
