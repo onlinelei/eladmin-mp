@@ -51,8 +51,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// import Breadcrumb from '@/components/Breadcrumb'
-// import Hamburger from '@/components/Hamburger'
+import Breadcrumb from '@/components/Breadcrumb'
+import Hamburger from '@/components/Hamburger'
 // import Doc from '@/components/Doc'
 // import Screenfull from '@/components/Screenfull'
 // import SizeSelect from '@/components/SizeSelect'
@@ -61,11 +61,11 @@ import Avatar from '@/assets/images/avatar.png'
 
 export default {
   components: {
-    // Breadcrumb,
-    // Hamburger,
+    Breadcrumb,
+    Hamburger
     // Screenfull,
     // SizeSelect,
-    // Search,
+    // Search
     // Doc
   },
   data() {

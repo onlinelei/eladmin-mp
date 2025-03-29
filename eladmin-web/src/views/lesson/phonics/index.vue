@@ -15,8 +15,10 @@
             ref="videoPlayer"
             controls
             class="video-player"
+            preload="metadata"
             @waiting="onVideoWaiting"
             @playing="onVideoPlaying"
+            @loadedmetadata="adjustVideoHeight"
           >
             <source :src="currentVideoUrl" type="video/mp4">
             您的浏览器不支持 video 标签。
@@ -50,7 +52,7 @@
                     v-for="(video, vIndex) in category.videos"
                     :key="'vid-'+vIndex"
                     :class="{ 'active': currentVideoUrl === video.url }"
-                    @click.stop="playVideo(video.url)"
+                    @click.stop="playVideo(video)"
                   >
                     <i class="el-icon-video-play" />
                     <span class="video-title">{{ video.title }}</span>
@@ -74,75 +76,168 @@ export default {
       isLoading: false,
       categorizedPlaylist: [
         {
-          name: 'L1 基础课程,想好叫什么告诉我',
+          name: 'KickOff',
           expanded: true,
           videos: [
-            { title: 'ABC', url: 'https://okeng.top/file/phonics/L1/ABC.mp4' },
-            { title: 'DEF', url: 'https://okeng.top/file/phonics/L1/DEF.mp4' },
-            { title: 'GHI', url: 'https://okeng.top/file/phonics/L1/GHI.mp4' },
-            { title: 'JKL', url: 'https://okeng.top/file/phonics/L1/JKL.mp4' },
-            { title: 'MNO', url: 'https://okeng.top/file/phonics/L1/MNO.mp4' },
-            { title: 'PQR', url: 'https://okeng.top/file/phonics/L1/PQR.mp4' },
-            { title: 'STUV', url: 'https://okeng.top/file/phonics/L1/STUV.mp4' },
-            { title: 'WXYZ', url: 'https://okeng.top/file/phonics/L1/WXYZ.mp4' }
+            { title: '第一课，家长必看', url: 'https://okeng.top/file/phonics/kickoff/kickoff.mp4' }
           ]
         },
         {
-          name: 'L2 进阶课程,想好叫什么告诉我',
+          name: 'L1 The Alphabet(字母发音)',
           expanded: false,
           videos: [
-            { title: 'MNO', url: 'http://file.okeng.top/phonics/L1/MNO.mp4' },
-            { title: 'PQR', url: 'http://file.okeng.top/phonics/L1/PQR.mp4' },
-            { title: 'STUV', url: 'http://file.okeng.top/phonics/L1/STUV.mp4' },
-            { title: 'WXYZ', url: 'http://file.okeng.top/phonics/L1/WXYZ.mp4' }
+            { title: 'Unit1-ABC', url: 'https://okeng.top/file/phonics/L1/ABC.mp4' },
+            { title: 'Unit2-DEF', url: 'https://okeng.top/file/phonics/L1/DEF.mp4' },
+            { title: 'Unit3-GHI', url: 'https://okeng.top/file/phonics/L1/GHI.mp4' },
+            { title: 'Unit4-JKL', url: 'https://okeng.top/file/phonics/L1/JKL.mp4' },
+            { title: 'Unit5-MNO', url: 'https://okeng.top/file/phonics/L1/MNO.mp4' },
+            { title: 'Unit6-PQR', url: 'https://okeng.top/file/phonics/L1/PQR.mp4' },
+            { title: 'Unit7-STUV', url: 'https://okeng.top/file/phonics/L1/STUV.mp4' },
+            { title: 'Unit8-WXYZ', url: 'https://okeng.top/file/phonics/L1/WXYZ.mp4' }
           ]
         },
         {
-          name: 'L3 高级课程,想好叫什么告诉我',
+          name: 'L2 Short Vowels(短元音)',
           expanded: false,
           videos: [
-            { title: '组合发音1', url: 'http://file.okeng.top/demo/1.mp4' },
-            { title: '组合发音2', url: 'http://file.okeng.top/demo/2.mp4' }
+            { title: 'Unit1-am,an', url: 'https://okeng.top/file/phonics/L2/am,an.mp4' },
+            { title: 'Unit2-ad,ag,ap,at', url: 'https://okeng.top/file/phonics/L2/ad,ag,ap,at.mp4' },
+            { title: 'Unit3-et,en,ed', url: 'https://okeng.top/file/phonics/L2/et,en,ed.mp4' },
+            { title: 'Unit4-ip,ib,id', url: 'https://okeng.top/file/phonics/L2/ip,ib,id.mp4' },
+            { title: 'Unit5-in,ig,it,ix', url: 'https://okeng.top/file/phonics/L2/in,ig,it,ix.mp4' },
+            { title: 'Unit6-ot,op', url: 'https://okeng.top/file/phonics/L2/ot,op.mp4' },
+            { title: 'Unit7-ug,ud,up', url: 'https://okeng.top/file/phonics/L2/ug,ud,up.mp4' },
+            { title: 'Unit8-ut,ub,um,un', url: 'https://okeng.top/file/phonics/L2/ut,ub,um,un.mp4' }
           ]
         },
         {
-          name: 'L4 实战训练, 想好叫什么告诉我',
+          name: 'L3 Long Vowels(长元音)',
           expanded: false,
           videos: [
-            { title: '场景练习1', url: 'http://file.okeng.top/demo/3.mp4' },
-            { title: '场景练习2', url: 'http://file.okeng.top/demo/4.mp4' }
+            { title: 'Unit1-ame,ate,ake,ave', url: 'https://okeng.top/file/phonics/L3/Unit1-ame,ate,ake,ave.mp4' },
+            { title: 'Unit2-ime,ike,ive,ine', url: 'https://okeng.top/file/phonics/L3/Unit2-ime,ike,ive,ine.mp4' },
+            { title: 'Unit3-oe,ue', url: 'https://okeng.top/file/phonics/L3/Unit3-oe,ue.mp4' },
+            { title: 'Unit4-ai,ay', url: 'https://okeng.top/file/phonics/L3/Unit4-ai,ay.mp4' },
+            { title: 'Unit5-ee,ea,y,ey', url: 'https://okeng.top/file/phonics/L3/Unit5-ee,ea,y,ey.mp4' },
+            { title: 'Unit6-igh,ie,y', url: 'https://okeng.top/file/phonics/L3/Unit6-igh,ie,y.mp4' },
+            { title: 'Unit7-oa,ow', url: 'https://okeng.top/file/phonics/L3/Unit7-oa,ow.mp4' },
+            { title: 'Unit8-ue,ui,ew,oo', url: 'https://okeng.top/file/phonics/L3/Unit8-ue,ui,ew,oo.mp4' }
+          ]
+        },
+        {
+          name: 'L4 Consonant Blends(辅音组合)',
+          expanded: false,
+          videos: [
+            { title: 'Unit1-bl,cl,br,cr,fl,gl', url: 'https://okeng.top/file/phonics/L4/Unit1-bl,cl,br,cr,fl,gl.mp4' },
+            { title: 'Unit2-fr,gr,pl,sl,dr,tr', url: 'https://okeng.top/file/phonics/L4/Unit2-fr,gr,pl,sl,dr,tr.mp4' },
+            { title: 'Unit3-sm,sn,sp,sw,st', url: 'https://okeng.top/file/phonics/L4/Unit3-sm,sn,sp,sw,st.mp4' },
+            { title: 'Unit4-sh,ch,tch,ph,wh', url: 'https://okeng.top/file/phonics/L4/Unit4-sh,ch,tch,ph,wh.mp4' },
+            { title: 'Unit5-th,th,ck,qu', url: 'https://okeng.top/file/phonics/L4/Unit5-th,th,ck,qu.mp4' },
+            { title: 'Unit6-ng,nk,nd,nt,lt,mp', url: 'https://okeng.top/file/phonics/L4/Unit6-ng,nk,nd,nt,lt,mp.mp4' },
+            { title: 'Unit7-sk,sc,spr,str,spl,squ', url: 'https://okeng.top/file/phonics/L4/Unit7-sk,sc,spr,str,spl,squ.mp4' },
+            { title: 'Unit8-softc,softg,voiceds', url: 'https://okeng.top/file/phonics/L4/Unit8-softc,softg,voiceds.mp4' }
+          ]
+        },
+        {
+          name: 'L5 Letter Combinations(字母组合)',
+          expanded: false,
+          videos: [
+            { title: 'Unit1-ar,ir,ur,er,or', url: 'https://okeng.top/file/phonics/L5/Unit1-ar,ir,ur,er,or.mp4' },
+            { title: 'Unit2-ou,ow,oi,oy,oo,u', url: 'https://okeng.top/file/phonics/L5/Unit2-ou,ow,oi,oy,oo,u.mp4' },
+            { title: 'Unit3-au,aw,all,wa,or,oar', url: 'https://okeng.top/file/phonics/L5/Unit3-au,aw,all,wa,or,oar.mp4' },
+            { title: 'Unit4-are,air,ea,ear,eer', url: 'https://okeng.top/file/phonics/L5/Unit4-are,air,ea,ear,eer.mp4' },
+            { title: 'Unit5-a,e,i,o,u', url: 'https://okeng.top/file/phonics/L5/Unit5-a,e,i,o,u.mp4' },
+            { title: 'Unit6-a,e,i,o,u', url: 'https://okeng.top/file/phonics/L5/Unit6-a,e,i,o,u.mp4' },
+            { title: 'Unit7-kn,wr,mb,e,rh,st', url: 'https://okeng.top/file/phonics/L5/Unit7-kn,wr,mb,e,rh,st.mp4' },
+            { title: 'Unit8-ture,sure,tion,sion,ous,ful', url: 'https://okeng.top/file/phonics/L5/Unit8-ture,sure,tion,sion,ous,ful.mp4' }
+          ]
+        },
+        {
+          name: 'Summary(发音规律，长难单词拼读)',
+          expanded: false,
+          videos: [
+            { title: 'Unit1-音节', url: 'https://okeng.top/file/phonics/summary/Unit1-vowel,syllable.mp4' },
+            { title: 'Unit2-音节划分', url: 'https://okeng.top/file/phonics/summary/Unit2-syllable,division.mp4' },
+            { title: 'Unit3-aeiou的多种发音', url: 'https://okeng.top/file/phonics/summary/Unit3-aeiou.mp4' }
           ]
         }
-      ]
+      ],
+      videoAspectRatio: null
     }
   },
   mounted() {
-    this.initFirstVideo()
+    // 不再初始化视频
+
+    // 添加窗口大小变化监听器
+    window.addEventListener('resize', this.adjustVideoHeight)
+
+    // --- 可选: 如果视频可能在挂载后立即加载完成 ---
+    // this.$nextTick(() => {
+    //   if (this.$refs.videoPlayer && this.$refs.videoPlayer.readyState >= 1) { // HAVE_METADATA or higher
+    //     this.adjustVideoHeight();
+    //   }
+    // });
+    // --- 可选 End ---
+  },
+  beforeDestroy() {
+    // 移除窗口大小变化监听器，防止内存泄漏
+    window.removeEventListener('resize', this.adjustVideoHeight)
   },
   methods: {
-    initFirstVideo() {
-      if (this.categorizedPlaylist[0].videos.length > 0) {
-        this.currentVideoUrl = this.categorizedPlaylist[0].videos[0].url
-      }
-    },
     toggleCategory(category) {
       category.expanded = !category.expanded
     },
-    playVideo(url) {
-      this.currentVideoUrl = url
-      const video = this.$refs.videoPlayer
-      this.isLoading = true
-      video.load()
-      video.play().catch(error => {
-        console.log('视频自动播放被阻止:', error)
-        this.isLoading = false
+    playVideo(video) {
+      if (this.currentVideoUrl !== video.url) {
+        this.currentVideoUrl = video.url
+        this.videoAspectRatio = null
+        this.$nextTick(() => {
+          const player = this.$refs.videoPlayer
+          if (player) {
+            player.load()
+            player.play().catch(error => {
+              console.error('Video play failed:', error)
+              this.isLoading = false
+            })
+            this.isLoading = true
+          }
+        })
+      }
+      // 可以在这里取消所有列表项的 active 状态，然后设置当前项为 active
+      this.categorizedPlaylist.forEach(category => {
+        category.videos.forEach(item => { item.active = false })
       })
+      video.active = true // 假设 video 对象上有 active 属性
     },
     onVideoWaiting() {
       this.isLoading = true
     },
     onVideoPlaying() {
       this.isLoading = false
+    },
+    adjustVideoHeight() {
+      const video = this.$refs.videoPlayer
+      if (!video) return // 确保 video 元素存在
+
+      // 尝试在元数据加载后获取宽高比
+      if (video.videoWidth && video.videoHeight) {
+        this.videoAspectRatio = video.videoHeight / video.videoWidth
+      }
+
+      // 如果已经获取了宽高比，则根据当前宽度调整高度
+      if (this.videoAspectRatio) {
+        const currentWidth = video.offsetWidth // 获取播放器元素当前的实际宽度
+        if (currentWidth > 0) {
+          const newHeight = currentWidth * this.videoAspectRatio
+          video.style.height = `${newHeight}px`
+        } else {
+          // 如果当前宽度为0 (可能在元素隐藏时发生)，可以移除高度设置或设置为auto
+          video.style.height = 'auto'
+        }
+      } else {
+        // 如果没有宽高比信息（例如视频加载失败），则回退到默认行为
+        video.style.height = 'auto'
+      }
     }
   }
 }
@@ -214,8 +309,8 @@ export default {
 /* 播放列表容器样式 */
 .playlist-container {
   flex: 1;
-  min-width: 300px;
-  max-width: 350px;
+  min-width: 400px;
+  max-width: 450px;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
@@ -271,7 +366,7 @@ export default {
 
 /* 分类标题hover效果 */
 .category-header:hover {
-  background: #f0f7ff;
+  background: #7bb1f0;
 }
 
 /* 分类箭头图标样式 */
@@ -308,14 +403,14 @@ export default {
 
 /* 子列表项hover效果 */
 .sub-list li:hover {
-  background: #f0f7ff;
+  background: #7bb1f0;
 }
 
 /* 选中状态的子列表项样式 */
 .sub-list li.active {
-  background: #ecf5ff;
+  background: #409EFF; /* 更深的背景色 */
+  color: #fff; /* 白色文字 */
   font-weight: 500;
-  color: #409EFF;
 }
 
 /* 视频标题样式 */
@@ -389,17 +484,63 @@ export default {
   }
 }
 
+/* 响应式设计：针对小屏幕设备 */
 @media (max-width: 768px) {
   .new-category {
-    padding: 20px 15px;
+    position: relative;
+    clip-path: inset(0);
+  }
+
+  .content-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .video-wrapper {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #fff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: block;
+  }
+
+  .playlist-wrapper {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    z-index: 1;
+  }
+
+  .video-player {
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+    display: block;
   }
 
   .page-title {
-    font-size: 24px;
+    font-size: 20px;
+    margin-bottom: 15px;
   }
 
-  .playlist li {
-    padding: 12px;
+  .playlist-item {
+    padding: 8px 10px;
   }
+}
+
+/* 针对更小的屏幕，例如手机 */
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 18px;
+  }
+  /* 可以在这里添加更细致的调整 */
 }
 </style>

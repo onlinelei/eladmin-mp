@@ -33,9 +33,9 @@
       </el-form-item>
     </el-form>
     <!-- 名言锦句 -->
-    <div class="quote">
+    <!-- <div class="quote">
       {{ quote }}
-    </div>
+    </div> -->
     <!--  底部  -->
     <div v-if="$store.state.settings.showFooter" id="el-login-footer">
       <span v-html="$store.state.settings.footerTxt" />
