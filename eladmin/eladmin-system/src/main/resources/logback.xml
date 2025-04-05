@@ -17,7 +17,7 @@
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_PATH}/elAdmin.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- 每天生成一个日志文件，保存30天 -->
+            <!-- 每天生成一个日志文件，保存360天 -->
             <fileNamePattern>${LOG_PATH}/elAdmin-%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>360</maxHistory>
         </rollingPolicy>
