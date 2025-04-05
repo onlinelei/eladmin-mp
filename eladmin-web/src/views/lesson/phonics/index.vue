@@ -16,6 +16,8 @@
             controls
             class="video-player"
             preload="metadata"
+            disablePictureInPicture
+            controlsList="nodownload noplaybackrate"
             @waiting="onVideoWaiting"
             @playing="onVideoPlaying"
             @loadedmetadata="adjustVideoHeight"
@@ -170,6 +172,12 @@ export default {
 
     // 添加窗口大小变化监听器
     window.addEventListener('resize', this.adjustVideoHeight)
+    // 添加触摸事件监听
+    const videoContainer = document.querySelector('.video-container')
+    if (videoContainer) {
+      videoContainer.addEventListener('touchmove', this.preventTouchZoom, { passive: false })
+      videoContainer.addEventListener('gesturestart', this.preventTouchZoom)
+    }
 
     // --- 可选: 如果视频可能在挂载后立即加载完成 ---
     // this.$nextTick(() => {
@@ -182,6 +190,12 @@ export default {
   beforeDestroy() {
     // 移除窗口大小变化监听器，防止内存泄漏
     window.removeEventListener('resize', this.adjustVideoHeight)
+    // 移除事件监听
+    const videoContainer = document.querySelector('.video-container')
+    if (videoContainer) {
+      videoContainer.removeEventListener('touchmove', this.preventTouchZoom)
+      videoContainer.removeEventListener('gesturestart', this.preventTouchZoom)
+    }
   },
   methods: {
     toggleCategory(category) {
@@ -200,6 +214,11 @@ export default {
               this.isLoading = false
             })
             this.isLoading = true
+            // 增强事件拦截
+            player.addEventListener('contextmenu', this.preventDownload)
+            player.addEventListener('dragstart', this.preventDownload)
+            player.addEventListener('selectstart', this.preventDownload)
+            player.addEventListener('touchstart', this.preventDownload)
           }
         })
       }
@@ -208,6 +227,11 @@ export default {
         category.videos.forEach(item => { item.active = false })
       })
       video.active = true // 假设 video 对象上有 active 属性
+    },
+    // 新增触摸事件处理
+    preventTouchZoom(e) {
+      e.preventDefault()
+      e.stopPropagation()
     },
     onVideoWaiting() {
       this.isLoading = true
@@ -241,6 +265,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style scoped>
@@ -542,5 +567,33 @@ export default {
     font-size: 18px;
   }
   /* 可以在这里添加更细致的调整 */
+  .video-player::-webkit-media-controls-download-button,
+  .video-player::-webkit-media-controls-fullscreen-button,
+  .video-player::-webkit-media-controls-play-button {
+    display: none !important;
+  }
+  .video-player::-webkit-media-controls-panel {
+    padding-right: 14px;
+    -webkit-justify-content: center;
+  }
+  /* 针对Android WebView的特殊处理 */
+  .video-player::-webkit-media-controls-enclosure {
+    overflow: hidden;
+  }
+  /* 隐藏时间信息后的下载按钮 */
+  .video-player::-webkit-media-controls-current-time-display,
+  .video-player::-webkit-media-controls-time-remaining-display {
+    display: none;
+  }
+  /* 自定义控件容器 */
+  .video-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
 }
 </style>
