@@ -12,7 +12,10 @@
     "lint": "eslint --ext .js,.vue src",
     "test:unit": "jest --clearCache && vue-cli-service test:unit",
     "svgo": "svgo -f src/assets/icons/svg --config=src/assets/icons/svgo.yml",
-    "new": "plop"
+    "new": "plop",
+    "clean": "rm -rf dist",
+    "clean:all": "rm -rf dist node_modules",
+    "deploy": "npm run clean && npm run build:prod && scp -r dist/* admin@okeng.top:/home/admin/workSpace/dockerFile/front/eladmin"
   },
   "husky": {
     "hooks": {

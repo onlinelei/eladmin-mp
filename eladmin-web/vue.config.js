@@ -115,6 +115,7 @@ module.exports = {
           config
             .optimization.splitChunks({
               chunks: 'all',
+              maxSize: 244 * 1024, // 尝试将大文件拆分为244KB的块
               cacheGroups: {
                 libs: {
                   name: 'chunk-libs',
