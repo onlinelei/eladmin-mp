@@ -84,19 +84,86 @@ export default {
           name: 'KickOff',
           expanded: true,
           videos: [
-            { title: '第一课，家长必看', url: 'https://okeng.top/file/m3u8/out1/master.m3u8' }
+            { title: '第一课，家长必看', url: 'https://okeng.top/file/phonics/kickoff/kickoff/master.m3u8' }
           ]
         },
         {
-          name: '加密测试',
+          name: 'L1 The Alphabet(字母发音)',
           expanded: false,
           videos: [
-            { title: '不加密480P', url: 'https://okeng.top/file/m3u8/out1/master.m3u8' },
-            { title: '不加密自适应分辨率', url: 'https://okeng.top/file/m3u8/out2/master.m3u8' },
-            { title: '加密自适应分辨率', url: 'https://okeng.top/file/m3u8/out5/master.m3u8' },
-            { title: '加密指定分辨率-480', url: 'https://okeng.top/file/m3u8/out5/480p/stream.m3u8' },
-            { title: '加密指定分辨率-720', url: 'https://okeng.top/file/m3u8/out5/720p/stream.m3u8' },
-            { title: '加密指定分辨率1080', url: 'https://okeng.top/file/m3u8/out5/1080p/stream.m3u8' }
+            { title: 'Unit1-ABC', url: 'https://okeng.top/file/phonics/L1/ABC/master.m3u8' },
+            { title: 'Unit2-DEF', url: 'https://okeng.top/file/phonics/L1/DEF/master.m3u8' },
+            { title: 'Unit3-GHI', url: 'https://okeng.top/file/phonics/L1/GHI/master.m3u8' },
+            { title: 'Unit4-JKL', url: 'https://okeng.top/file/phonics/L1/JKL/master.m3u8' },
+            { title: 'Unit5-MNO', url: 'https://okeng.top/file/phonics/L1/MNO/master.m3u8' },
+            { title: 'Unit6-PQR', url: 'https://okeng.top/file/phonics/L1/PQR/master.m3u8' },
+            { title: 'Unit7-STUV', url: 'https://okeng.top/file/phonics/L1/STUV/master.m3u8' },
+            { title: 'Unit8-WXYZ', url: 'https://okeng.top/file/phonics/L1/WXYZ/master.m3u8' }
+          ]
+        },
+        {
+          name: 'L2 Short Vowels(短元音)',
+          expanded: false,
+          videos: [
+            { title: 'Unit1-am,an', url: 'https://okeng.top/file/phonics/L2/am,an/master.m3u8' },
+            { title: 'Unit2-ad,ag,ap,at', url: 'https://okeng.top/file/phonics/L2/ad,ag,ap,at/master.m3u8' },
+            { title: 'Unit3-et,en,ed', url: 'https://okeng.top/file/phonics/L2/et,en,ed/master.m3u8' },
+            { title: 'Unit4-ip,ib,id', url: 'https://okeng.top/file/phonics/L2/ip,ib,id/master.m3u8' },
+            { title: 'Unit5-in,ig,it,ix', url: 'https://okeng.top/file/phonics/L2/in,ig,it,ix/master.m3u8' },
+            { title: 'Unit6-ot,op', url: 'https://okeng.top/file/phonics/L2/ot,op/master.m3u8' },
+            { title: 'Unit7-ug,ud,up', url: 'https://okeng.top/file/phonics/L2/ug,ud,up/master.m3u8' },
+            { title: 'Unit8-ut,ub,um,un', url: 'https://okeng.top/file/phonics/L2/ut,ub,um,un/master.m3u8' }
+          ]
+        },
+        {
+          name: 'L3 Long Vowels(长元音)',
+          expanded: false,
+          videos: [
+            { title: 'Unit1-ame,ate,ake,ave', url: 'https://okeng.top/file/phonics/L3/Unit1-ame,ate,ake,ave/master.m3u8' },
+            { title: 'Unit2-ime,ike,ive,ine', url: 'https://okeng.top/file/phonics/L3/Unit2-ime,ike,ive,ine/master.m3u8' },
+            { title: 'Unit3-oe,ue', url: 'https://okeng.top/file/phonics/L3/Unit3-oe,ue/master.m3u8' },
+            { title: 'Unit4-ai,ay', url: 'https://okeng.top/file/phonics/L3/Unit4-ai,ay/master.m3u8' },
+            { title: 'Unit5-ee,ea,y,ey', url: 'https://okeng.top/file/phonics/L3/Unit5-ee,ea,y,ey/master.m3u8' },
+            { title: 'Unit6-igh,ie,y', url: 'https://okeng.top/file/phonics/L3/Unit6-igh,ie,y/master.m3u8' },
+            { title: 'Unit7-oa,ow', url: 'https://okeng.top/file/phonics/L3/Unit7-oa,ow/master.m3u8' },
+            { title: 'Unit8-ue,ui,ew,oo', url: 'https://okeng.top/file/phonics/L3/Unit8-ue,ui,ew,oo/master.m3u8' }
+          ]
+        },
+        {
+          name: 'L4 Consonant Blends(辅音组合)',
+          expanded: false,
+          videos: [
+            { title: 'Unit1-bl,cl,br,cr,fl,gl', url: 'https://okeng.top/file/phonics/L4/Unit1-bl,cl,br,cr,fl,gl/master.m3u8' },
+            { title: 'Unit2-fr,gr,pl,sl,dr,tr', url: 'https://okeng.top/file/phonics/L4/Unit2-fr,gr,pl,sl,dr,tr/master.m3u8' },
+            { title: 'Unit3-sm,sn,sp,sw,st', url: 'https://okeng.top/file/phonics/L4/Unit3-sm,sn,sp,sw,st/master.m3u8' },
+            { title: 'Unit4-sh,ch,tch,ph,wh', url: 'https://okeng.top/file/phonics/L4/Unit4-sh,ch,tch,ph,wh/master.m3u8' },
+            { title: 'Unit5-th,th,ck,qu', url: 'https://okeng.top/file/phonics/L4/Unit5-th,th,ck,qu/master.m3u8' },
+            { title: 'Unit6-ng,nk,nd,nt,lt,mp', url: 'https://okeng.top/file/phonics/L4/Unit6-ng,nk,nd,nt,lt,mp/master.m3u8' },
+            { title: 'Unit7-sk,sc,spr,str,spl,squ', url: 'https://okeng.top/file/phonics/L4/Unit7-sk,sc,spr,str,spl,squ/master.m3u8' },
+            { title: 'Unit8-softc,softg,voiceds', url: 'https://okeng.top/file/phonics/L4/Unit8-softc,softg,voiceds/master.m3u8' }
+          ]
+        },
+        {
+          name: 'L5 Letter Combinations(字母组合)',
+          expanded: false,
+          videos: [
+            { title: 'Unit1-ar,ir,ur,er,or', url: 'https://okeng.top/file/phonics/L5/Unit1-ar,ir,ur,er,or/master.m3u8' },
+            { title: 'Unit2-ou,ow,oi,oy,oo,u', url: 'https://okeng.top/file/phonics/L5/Unit2-ou,ow,oi,oy,oo,u/master.m3u8' },
+            { title: 'Unit3-au,aw,all,wa,or,oar', url: 'https://okeng.top/file/phonics/L5/Unit3-au,aw,all,wa,or,oar/master.m3u8' },
+            { title: 'Unit4-are,air,ea,ear,eer', url: 'https://okeng.top/file/phonics/L5/Unit4-are,air,ea,ear,eer/master.m3u8' },
+            { title: 'Unit5-a,e,i,o,u', url: 'https://okeng.top/file/phonics/L5/Unit5-a,e,i,o,u/master.m3u8' },
+            { title: 'Unit6-a,e,i,o,u', url: 'https://okeng.top/file/phonics/L5/Unit6-a,e,i,o,u/master.m3u8' },
+            { title: 'Unit7-kn,wr,mb,e,rh,st', url: 'https://okeng.top/file/phonics/L5/Unit7-kn,wr,mb,e,rh,st/master.m3u8' },
+            { title: 'Unit8-ture,sure,tion,sion,ous,ful', url: 'https://okeng.top/file/phonics/L5/Unit8-ture,sure,tion,sion,ous,ful/master.m3u8' }
+          ]
+        },
+        {
+          name: 'Summary(发音规律，长难单词拼读)',
+          expanded: false,
+          videos: [
+            { title: 'Unit1-音节', url: 'https://okeng.top/file/phonics/summary/Unit1-vowel,syllable/master.m3u8' },
+            { title: 'Unit2-音节划分', url: 'https://okeng.top/file/phonics/summary/Unit2-syllable,division/master.m3u8' },
+            { title: 'Unit3-aeiou的多种发音', url: 'https://okeng.top/file/phonics/summary/Unit3-aeiou/master.m3u8' }
           ]
         }
       ],
@@ -214,6 +281,9 @@ export default {
           capLevelToPlayerSize: true,
           enableWorker: true,
           lowLatencyMode: true,
+          maxMaxBufferLength: 240, // 新增：限制最大缓冲长度秒数
+          maxBufferSize: 60000000, // 新增：最大缓冲区大小60MB
+          maxBufferLength: 60, // 新增：最大缓冲长度秒数
           xhrSetup: (xhr, url) => {
             xhr.withCredentials = true
           }

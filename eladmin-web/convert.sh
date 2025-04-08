@@ -47,23 +47,28 @@ for input_file in "$@"; do
     output_dir="$filename_noext"
     mkdir -p "$output_dir"
 
+
     echo "正在处理: $input_file → 输出目录: $output_dir/"
 
+    say "现在开始处理 $input_file "
+
     # 构建 FFmpeg 命令
-    ffmpeg_cmd="ffmpeg -i \"$input_file\" \
+    ffmpeg_cmd="ffmpeg -i \"$input_file\" -i \"$HOME/.ffmpeg/mark/okeng.top.png\" \
         -filter_complex \
         \"[0:v]split=3[v1][v2][v3]; \
-         [v1]scale=1920:1080[v1out]; \
-         [v2]scale=1280:720[v2out]; \
-         [v3]scale=854:480[v3out]\" \
-        -map \"[v1out]\" -map 0:a -c:v:0 libx264 -b:v:0 1000k -maxrate:v:0 1500k -bufsize:v:0 2000k -preset fast -c:a:0 aac -b:a:0 128k \
-        -map \"[v2out]\" -map 0:a -c:v:1 libx264 -b:v:1 600k -maxrate:v:1 900k -bufsize:v:1 1200k -preset fast -c:a:1 aac -b:a:1 96k \
-        -map \"[v3out]\" -map 0:a -c:v:2 libx264 -b:v:2 400k -maxrate:v:2 600k -bufsize:v:2 800k -preset fast -c:a:2 aac -b:a:2 64k \
+         [v1][1:v]overlay=x=60:y=main_h-overlay_h-10[v1w]; [v1w]scale=1920:1080[v1out]; \
+         [v2][1:v]overlay=x=60:y=main_h-overlay_h-10[v2w]; [v2w]scale=1280:720[v2out]; \
+         [v3][1:v]overlay=x=60:y=main_h-overlay_h-10[v3w]; [v3w]scale=854:480[v3out]\" \
+        -map \"[v1out]\" -map 0:a -crf:v:0 30 -c:a:0 aac -b:a:0 96k \
+        -map \"[v2out]\" -map 0:a -crf:v:1 32 -c:a:1 aac -b:a:1 96k \
+        -map \"[v3out]\" -map 0:a -crf:v:2 34 -c:a:2 aac -b:a:2 96k \
         -var_stream_map \"v:0,a:0,name:1080p v:1,a:1,name:720p v:2,a:2,name:480p\" \
         -f hls \
-        -hls_time 4 \
         -hls_list_size 0 \
-        -hls_segment_type mpegts"
+        -hls_segment_type mpegts \
+        -force_key_frames \"expr:gte(t,n_forced*5)\" \
+        -preset veryslow -tune stillimage -r 25 -g 125 -keyint_min 125 \
+        -x264-params \"ref=6:bframes=0:aq-mode=1:psy-rd=0.5:no-scenecut=1\""
 
     # 根据需要添加加密选项
     if [ $use_encryption -eq 1 ]; then
@@ -80,6 +85,8 @@ for input_file in "$@"; do
     eval $ffmpeg_cmd
 
     echo "完成: $input_file → 输出目录: $output_dir/"
+
+    say "处理完成 $input_file "
 done
 
 echo "所有文件处理完毕！"
