@@ -414,8 +414,8 @@ export default {
 /* 播放列表容器样式 */
 .playlist-container {
   flex: 1;
-  min-width: 400px;
-  max-width: 450px;
+  min-width: 350px;
+  max-width: 370px;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
@@ -433,77 +433,43 @@ export default {
 
 /* 播放列表标题样式 */
 .playlist-title {
-  font-size: 18px;
+  font-size: 12px; /* 原18px缩小一半 */
   color: #303133;
   margin-bottom: 20px;
   padding-bottom: 12px;
   border-bottom: 2px solid #f0f2f5;
   display: flex;
   align-items: center;
-  gap: 8px;
-}
-
-/* 播放列表样式 */
-.playlist {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-/* 分类项样式 */
-.category-item {
-  margin: 8px 0;
-  border-radius: 8px;
-  background: #fff;
+  gap: 4px;
 }
 
 /* 分类标题样式 */
 .category-header {
-  padding: 14px 16px;
+  padding: 7px 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
   transition: all 0.3s;
   background: #f8f9fa;
   border-radius: 8px;
-}
-
-/* 分类标题hover效果 */
-.category-header:hover {
-  background: #7bb1f0;
-}
-
-/* 分类箭头图标样式 */
-.arrow-icon {
-  margin-left: auto;
-  transform: rotate(0deg);
-  transition: transform 0.3s;
-}
-
-/* 展开状态的分类箭头图标样式 */
-.expanded .arrow-icon {
-  transform: rotate(90deg);
+  font-size: 12px;
+  margin-left: 0; /* 新增：移除默认左边距 */
 }
 
 /* 子列表样式 */
 .sub-list {
-  list-style: none;
-  padding: 8px 0 8px 30px;
-  margin: 0;
+  padding-left: 10px; /* 原20px改为10px */
+  margin-left: 0; /* 新增：移除默认左边距 */
+  border-left: 1px solid #e0e3e7; /* 新增：添加左边框线 */
 }
 
 /* 子列表项样式 */
 .sub-list li {
-  padding: 12px 16px;
-  margin: 4px 0;
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: all 0.3s;
-  background: #f8f9fa;
+  padding: 6px 8px;
+  margin: 2px 0 2px 10px; /* 调整左边距 */
+  font-size: 11px;
+  position: relative;
 }
 
 /* 子列表项hover效果 */
