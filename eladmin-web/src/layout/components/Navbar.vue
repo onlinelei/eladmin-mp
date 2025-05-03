@@ -5,22 +5,6 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
-      <template v-if="device!=='mobile'">
-        <!-- <search id="header-search" class="right-menu-item" /> -->
-
-        <!-- <el-tooltip content="项目文档" effect="dark" placement="bottom">
-          <Doc class="right-menu-item hover-effect" />
-        </el-tooltip>
-
-        <el-tooltip content="全屏缩放" effect="dark" placement="bottom">
-          <screenfull id="screenfull" class="right-menu-item hover-effect" />
-        </el-tooltip>
-
-        <el-tooltip content="布局设置" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip> -->
-
-      </template>
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
@@ -53,20 +37,13 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-// import Doc from '@/components/Doc'
-// import Screenfull from '@/components/Screenfull'
-// import SizeSelect from '@/components/SizeSelect'
-// import Search from '@/components/HeaderSearch'
+
 import Avatar from '@/assets/images/avatar.png'
 
 export default {
   components: {
     Breadcrumb,
     Hamburger
-    // Screenfull,
-    // SizeSelect,
-    // Search
-    // Doc
   },
   data() {
     return {
