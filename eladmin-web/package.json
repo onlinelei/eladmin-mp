@@ -15,7 +15,8 @@
     "new": "plop",
     "clean": "rm -rf dist",
     "clean:all": "rm -rf dist node_modules",
-    "deploy": "npm run clean && npm run build:prod && scp -r dist/* admin@okeng.top:/home/admin/workSpace/dockerFile/front/eladmin"
+    "deploy": "npm run clean && npm run build:prod && scp -r dist/* admin@okeng.top:/home/admin/workSpace/dockerFile/front/eladmin",
+    "deploy:test": "npm run clean && npm run build:prod && scp -r dist/* root@120.76.99.24:/root/dockerFile/front/eladmin"
   },
   "husky": {
     "hooks": {
